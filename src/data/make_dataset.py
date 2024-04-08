@@ -4,16 +4,32 @@ import logging
 from pathlib import Path
 from dotenv import find_dotenv, load_dotenv
 
+from torch.utils.data import DataLoader
+import pandas as pd
+
+from src.common.datasets import FacesDataset
+import src.common.persistence as persistence
+
 
 @click.command()
-@click.argument('input_filepath', type=click.Path(exists=True))
-@click.argument('output_filepath', type=click.Path())
-def main(input_filepath, output_filepath):
+@click.argument('raw_path', type=click.Path(exists=True))
+def main(raw_path):
     """ Runs data processing scripts to turn raw data from (../raw) into
-        cleaned data ready to be analyzed (saved in ../processed).
+        a dataset ready to be transformed (saved in ../raw).
     """
     logger = logging.getLogger(__name__)
-    logger.info('making final data set from raw data')
+    logger.info('Generating dataset from raw data')
+
+    # Loading train & validation datasets
+    train_df = pd.read_csv('data/raw/train.csv')
+    valid_df = pd.read_csv('data/raw/valid.csv')
+
+    # Generating datasets & data loader
+    train_dataset = FacesDataset(dataframe=train_df, root_dir=raw_path)
+    valid_dataset = FacesDataset(dataframe=valid_df, root_dir=raw_path)
+
+    persistence.save_dataset(train_dataset, raw_path, 'raw_train_dataset')
+    persistence.save_dataset(valid_dataset, raw_path, 'raw_valid_dataset')
 
 
 if __name__ == '__main__':

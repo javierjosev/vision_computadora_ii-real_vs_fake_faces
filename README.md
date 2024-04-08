@@ -46,6 +46,8 @@ Project Organization
     │   │   ├── predict_model.py
     │   │   └── train_model.py
     │   │
+    │   ├── common         <- Common resources used across the project
+    │   │
     │   └── visualization  <- Scripts to create exploratory and results oriented visualizations
     │       └── visualize.py
     │

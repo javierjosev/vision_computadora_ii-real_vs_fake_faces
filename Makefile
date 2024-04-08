@@ -1,14 +1,16 @@
-.PHONY: clean data lint requirements sync_data_to_s3 sync_data_from_s3
+.PHONY: clean lint data features train predict
 
 #################################################################################
 # GLOBALS                                                                       #
 #################################################################################
 
 PROJECT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
-BUCKET = [OPTIONAL] your-bucket-for-syncing-data (do not include 's3://')
+# BUCKET = [OPTIONAL] your-bucket-for-syncing-data (do not include 's3://')
 PROFILE = default
 PROJECT_NAME = real_vs_fake_faces
-PYTHON_INTERPRETER = python3
+# PYTHON_INTERPRETER = python3
+# Custom PATH for Python Virtual Environments
+PYTHON_INTERPRETER = $$HOME/pythonEnvs/.venv/bin/python3
 
 ifeq (,$(shell which conda))
 HAS_CONDA=False
@@ -27,7 +29,19 @@ requirements: test_environment
 
 ## Make Dataset
 data:
-	$(PYTHON_INTERPRETER) src/data/make_dataset.py data/raw data/processed
+	$(PYTHON_INTERPRETER) src/data/make_dataset.py data/raw
+
+## Build Features
+features:
+	$(PYTHON_INTERPRETER) src/features/build_features.py data/raw data/processed
+
+## Train Models
+train:
+	$(PYTHON_INTERPRETER) src/models/train_model.py data/processed models
+
+## Predict
+predict:
+	$(PYTHON_INTERPRETER) src/models/predict_model.py
 
 ## Delete all compiled Python files
 clean:

@@ -31,8 +31,10 @@ def main(processed_path, model_path):
     logger.info('Loading trained models for predictions...')
     faces_simple_cnn_data_model = persistence.load_faces_simple_cnn_model(model_path, 'faces_simple_cnn_data')
     faces_simple_cnn_data_aug_model = persistence.load_faces_simple_cnn_model(model_path, 'faces_simple_cnn_data_aug')
-    faces_simple_cnn_data_aug_reduced_model = persistence.load_faces_simple_cnn_model(model_path,
-                                                                                      'faces_simple_cnn_data_aug_reduced')
+    faces_simple_cnn_data_aug_reduced_model = \
+        persistence.load_faces_simple_cnn_model(model_path, 'faces_simple_cnn_data_aug_reduced')
+    resnet18_binary_data_aug_reduced_model = \
+        persistence.load_resnet18_binary_model(model_path, 'resnet18_binary_data_aug_reduced')
 
     metric = torchmetrics.classification.BinaryAccuracy()
 
@@ -40,6 +42,7 @@ def main(processed_path, model_path):
     model_predictions(faces_simple_cnn_data_model, processed_valid_dataloader, metric)
     model_predictions(faces_simple_cnn_data_aug_model, processed_valid_dataloader_aug, metric)
     model_predictions(faces_simple_cnn_data_aug_reduced_model, processed_valid_dataloader_aug_reduced, metric)
+    model_predictions(resnet18_binary_data_aug_reduced_model, processed_valid_dataloader_aug_reduced, metric)
 
 
 def model_predictions(model, valid_dataloader, metric):

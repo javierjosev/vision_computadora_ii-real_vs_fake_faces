@@ -1,5 +1,6 @@
 import torch
 from torch import nn
+from torchvision import models
 
 
 def train(model, optimizer, criterion, metric, data, epochs):
@@ -101,3 +102,38 @@ class FacesSimpleCNN(nn.Module):
         x = self.fc2(x)
         x = self.final(x)
         return x.squeeze()
+
+
+class ResNet18Binary(nn.Module):
+
+    def __init__(self, num_classes=1):
+        super().__init__()
+
+        # Pre-trained ResNet18 model
+        self.resnet = models.resnet18(pretrained=True)
+
+        # for param in self.resnet.parameters():
+        #     param.requires_grad = False
+
+        # Replace the final fully-connected layer with a binary classifier
+        self.resnet.fc = nn.Linear(in_features=512, out_features=num_classes)
+        self.final = torch.nn.Sigmoid()
+
+    def forward(self, x):
+        # # Pass the input through the ResNet18 model
+        # features = self.resnet(x)
+        #
+        # # Determine the flattened size dynamically
+        # flattened_size = features.numel()  # Number of elements in the tensor
+        #
+        # # Flatten the features using the correct size
+        # features = features.view(-1, flattened_size)
+        #
+        # # Apply the binary classifier
+        # output = self.fc(features)
+        # output = self.final(output)
+
+        x = self.resnet(x)
+        output = self.final(x)
+
+        return output.squeeze()

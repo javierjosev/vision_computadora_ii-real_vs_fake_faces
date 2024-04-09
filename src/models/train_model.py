@@ -52,6 +52,11 @@ def main(processed_path, model_path, model_to_train):
             train_faces_simple_cnn('faces_simple_cnn_data_aug_reduced', model_path,
                                    processed_train_dataloader_aug_reduced,
                                    processed_valid_dataloader_aug_reduced, epochs=35, logger=logger, show_plots=True)
+        case "resnet18_binary-data_aug_reduced":
+            logger.info('ONLY resnet18_binary model with data_aug_reduced SELECTED')
+            train_resnet18_binary('resnet18_binary_data_aug_reduced"', model_path,
+                                  processed_train_dataloader_aug_reduced,
+                                  processed_valid_dataloader_aug_reduced, epochs=10, logger=logger, show_plots=True)
         case "all":
             logger.info('ALL models SELECTED')
             train_faces_simple_cnn('faces_simple_cnn_data', model_path, processed_train_dataloader,
@@ -61,6 +66,9 @@ def main(processed_path, model_path, model_to_train):
             train_faces_simple_cnn('faces_simple_cnn_data_aug_reduced', model_path,
                                    processed_train_dataloader_aug_reduced,
                                    processed_valid_dataloader_aug_reduced, epochs=35, logger=logger, show_plots=False)
+            train_resnet18_binary('resnet18_binary_data_aug_reduced"', model_path,
+                                  processed_train_dataloader_aug_reduced,
+                                  processed_valid_dataloader_aug_reduced, epochs=10, logger=logger, show_plots=False)
         case _:
             logger.error("Invalid option")
             sys.exit()
@@ -71,6 +79,24 @@ def train_faces_simple_cnn(model_name, model_path, processed_train_dataloader, p
     # # Simple model, simple data
     logger.info('Training FacesSimpleCNN model with dataset')
     simple_model = models.FacesSimpleCNN()
+    optimizer = torch.optim.Adam(simple_model.parameters(), lr=0.0001)
+    loss = torch.nn.BCELoss()
+    metric = torchmetrics.classification.BinaryAccuracy()
+    data = {"train": processed_train_dataloader, "valid": processed_valid_dataloader}
+    history = models.train(simple_model, optimizer, loss, metric, data, epochs)
+
+    if show_plots:
+        plots.plot_history(history)
+        plots.evaluate_model(simple_model, processed_valid_dataloader, metric)
+
+    persistence.save_model(simple_model, model_path, model_name)
+
+
+def train_resnet18_binary(model_name, model_path, processed_train_dataloader, processed_valid_dataloader, epochs,
+                          logger, show_plots=False):
+    # # Simple model, simple data
+    logger.info('Training ResNet18Binary model with dataset')
+    simple_model = models.ResNet18Binary()
     optimizer = torch.optim.Adam(simple_model.parameters(), lr=0.0001)
     loss = torch.nn.BCELoss()
     metric = torchmetrics.classification.BinaryAccuracy()

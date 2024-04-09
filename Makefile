@@ -37,7 +37,7 @@ features:
 
 ## Train Models
 train:
-	$(PYTHON_INTERPRETER) src/models/train_model.py data/processed models
+	$(PYTHON_INTERPRETER) src/models/train_model.py data/processed models faces_simple_cnn-data
 
 ## Predict
 predict:

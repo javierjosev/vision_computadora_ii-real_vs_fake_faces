@@ -29,8 +29,12 @@ def main(raw_path, processed_path):
     logger.info('Loading the raw dataloader...')
     raw_train_dataset = persistence.load_dataset(raw_path, 'raw_train_dataset')
     raw_valid_dataset = persistence.load_dataset(raw_path, 'raw_valid_dataset')
+
     raw_train_dataset_aug = persistence.load_dataset(raw_path, 'raw_train_dataset')
     raw_valid_dataset_aug = persistence.load_dataset(raw_path, 'raw_valid_dataset')
+
+    raw_train_dataset_aug_reduced = persistence.load_dataset(raw_path, 'raw_train_dataset')
+    raw_valid_dataset_aug_reduced = persistence.load_dataset(raw_path, 'raw_valid_dataset')
 
     logger.info('Creating the transformations...')
     images_width = 224
@@ -56,24 +60,44 @@ def main(raw_path, processed_path):
         transforms.Normalize(mean_train, std_train)
     ])
 
+    transform_aug_reduced = transforms.Compose([
+        transforms.Resize((images_width, images_height)),
+        transforms.RandomRotation(degrees=10),
+        transforms.RandomHorizontalFlip(0.5),
+        # transforms.RandomResizedCrop(size=(images_width, images_height), scale=(0.8, 1.0)),
+        # transforms.ColorJitter(saturation=0.1, hue=0.1),
+        transforms.ToTensor(),
+        transforms.Normalize(mean_train, std_train)
+    ])
+
     processed_train_dataloader, processed_valid_dataloader = build_data_loader("data", raw_train_dataset,
-                                                                               raw_valid_dataset, transform, 32,
-                                                                               processed_path, logger)
+                                                                               raw_valid_dataset,
+                                                                               transform, transform,
+                                                                               32, processed_path, logger)
 
     processed_train_dataloader_aug, processed_valid_dataloader_aug = build_data_loader("data_aug",
                                                                                        raw_train_dataset_aug,
                                                                                        raw_valid_dataset_aug,
-                                                                                       transform_aug,
+                                                                                       transform_aug, transform,
                                                                                        32, processed_path, logger)
 
+    processed_train_dataloader_aug_reduced, processed_valid_dataloader_aug_reduced = build_data_loader(
+                                                                                    "data_aug_reduced",
+                                                                                    raw_train_dataset_aug_reduced,
+                                                                                    raw_valid_dataset_aug_reduced,
+                                                                                    transform_aug_reduced, transform,
+                                                                                    32, processed_path, logger)
+
     plots.show_transformed_images(processed_train_dataloader.dataset, processed_train_dataloader_aug.dataset)
+    plots.show_transformed_images(processed_train_dataloader.dataset, processed_train_dataloader_aug_reduced.dataset)
 
 
-def build_data_loader(name, train_dataset, valid_dataset, transform, batch_size, processed_path, logger):
+def build_data_loader(name, train_dataset, valid_dataset, train_transform, valid_transform, batch_size, processed_path,
+                      logger):
     logger.info('Generating the dataloader')
 
-    train_dataset.transform = transform
-    valid_dataset.transform = transform
+    train_dataset.transform = train_transform
+    valid_dataset.transform = valid_transform
     processed_train_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
     processed_valid_dataloader = DataLoader(valid_dataset, batch_size=batch_size, shuffle=True)
 

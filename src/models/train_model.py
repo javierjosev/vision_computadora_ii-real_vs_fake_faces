@@ -33,6 +33,11 @@ def main(processed_path, model_path, model_to_train):
     processed_train_dataloader_aug = persistence.load_dataloader(processed_path, 'processed_train_dataloader-data_aug')
     processed_valid_dataloader_aug = persistence.load_dataloader(processed_path, 'processed_valid_dataloader-data_aug')
 
+    processed_train_dataloader_aug_reduced = persistence.load_dataloader(processed_path, 'processed_train_dataloader'
+                                                                                         '-data_aug_reduced')
+    processed_valid_dataloader_aug_reduced = persistence.load_dataloader(processed_path, 'processed_valid_dataloader'
+                                                                                         '-data_aug_reduced')
+
     match model_to_train:
         case "faces_simple_cnn-data":
             logger.info('ONLY faces_simple_cnn model with data SELECTED')
@@ -42,12 +47,20 @@ def main(processed_path, model_path, model_to_train):
             logger.info('ONLY faces_simple_cnn model with data_aug SELECTED')
             train_faces_simple_cnn('faces_simple_cnn_data_aug', model_path, processed_train_dataloader_aug,
                                    processed_valid_dataloader_aug, epochs=35, logger=logger, show_plots=True)
+        case "faces_simple_cnn-data_aug_reduced":
+            logger.info('ONLY faces_simple_cnn model with data_aug_reduced SELECTED')
+            train_faces_simple_cnn('faces_simple_cnn_data_aug_reduced', model_path,
+                                   processed_train_dataloader_aug_reduced,
+                                   processed_valid_dataloader_aug_reduced, epochs=20, logger=logger, show_plots=True)
         case "all":
             logger.info('ALL models SELECTED')
             train_faces_simple_cnn('faces_simple_cnn_data', model_path, processed_train_dataloader,
                                    processed_valid_dataloader, epochs=10, logger=logger, show_plots=False)
             train_faces_simple_cnn('faces_simple_cnn_data_aug', model_path, processed_train_dataloader_aug,
                                    processed_valid_dataloader_aug, epochs=35, logger=logger, show_plots=False)
+            train_faces_simple_cnn('faces_simple_cnn_data_aug_reduced', model_path,
+                                   processed_train_dataloader_aug_reduced,
+                                   processed_valid_dataloader_aug_reduced, epochs=20, logger=logger, show_plots=False)
         case _:
             logger.error("Invalid option")
             sys.exit()

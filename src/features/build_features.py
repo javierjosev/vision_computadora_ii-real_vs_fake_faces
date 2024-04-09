@@ -3,14 +3,11 @@ import click
 import logging
 from pathlib import Path
 
-import torch
 from dotenv import find_dotenv, load_dotenv
 
 from torchvision import transforms
 from torch.utils.data import DataLoader
-from torch.utils.data import Dataset, DataLoader
 
-from src.common.datasets import FacesDataset
 import src.common.persistence as persistence
 import src.common.plots as plots
 
@@ -64,7 +61,7 @@ def main(raw_path, processed_path):
         transforms.Resize((images_width, images_height)),
         transforms.RandomRotation(degrees=10),
         transforms.RandomHorizontalFlip(0.5),
-        # transforms.RandomResizedCrop(size=(images_width, images_height), scale=(0.8, 1.0)),
+        transforms.RandomResizedCrop(size=(images_width, images_height), scale=(0.9, 1.0)),
         # transforms.ColorJitter(saturation=0.1, hue=0.1),
         transforms.ToTensor(),
         transforms.Normalize(mean_train, std_train)

@@ -41,7 +41,7 @@ train:
 
 ## Predict
 predict:
-	$(PYTHON_INTERPRETER) src/models/predict_model.py
+	$(PYTHON_INTERPRETER) src/models/predict_model.py data/processed models
 
 ## Delete all compiled Python files
 clean:

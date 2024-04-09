@@ -51,7 +51,7 @@ def main(processed_path, model_path, model_to_train):
             logger.info('ONLY faces_simple_cnn model with data_aug_reduced SELECTED')
             train_faces_simple_cnn('faces_simple_cnn_data_aug_reduced', model_path,
                                    processed_train_dataloader_aug_reduced,
-                                   processed_valid_dataloader_aug_reduced, epochs=20, logger=logger, show_plots=True)
+                                   processed_valid_dataloader_aug_reduced, epochs=35, logger=logger, show_plots=True)
         case "all":
             logger.info('ALL models SELECTED')
             train_faces_simple_cnn('faces_simple_cnn_data', model_path, processed_train_dataloader,
@@ -60,7 +60,7 @@ def main(processed_path, model_path, model_to_train):
                                    processed_valid_dataloader_aug, epochs=35, logger=logger, show_plots=False)
             train_faces_simple_cnn('faces_simple_cnn_data_aug_reduced', model_path,
                                    processed_train_dataloader_aug_reduced,
-                                   processed_valid_dataloader_aug_reduced, epochs=20, logger=logger, show_plots=False)
+                                   processed_valid_dataloader_aug_reduced, epochs=35, logger=logger, show_plots=False)
         case _:
             logger.error("Invalid option")
             sys.exit()

@@ -1,0 +1,16 @@
+2024-04-09 15:30:50,942 - __main__ - INFO - Training ResNet18Binary model with dataset
+/home/jvillagra/pythonEnvs/.venv/lib/python3.10/site-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/home/jvillagra/pythonEnvs/.venv/lib/python3.10/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet18_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet18_Weights.DEFAULT` to get the most up-to-date weights.
+  warnings.warn(msg)
+Epoch: 1/10 - Train loss 0.356389 - Train Accuracy 0.837043 - Valid Loss 0.202880 - Valid Accuracy 0.923980
+Epoch: 2/10 - Train loss 0.163949 - Train Accuracy 0.935074 - Valid Loss 0.211035 - Valid Accuracy 0.916888
+Epoch: 3/10 - Train loss 0.115144 - Train Accuracy 0.957715 - Valid Loss 0.163600 - Valid Accuracy 0.938276
+Epoch: 4/10 - Train loss 0.098515 - Train Accuracy 0.964755 - Valid Loss 0.183930 - Valid Accuracy 0.931184
+Epoch: 5/10 - Train loss 0.074774 - Train Accuracy 0.973839 - Valid Loss 0.131220 - Valid Accuracy 0.951906
+Epoch: 6/10 - Train loss 0.073401 - Train Accuracy 0.971414 - Valid Loss 0.105745 - Valid Accuracy 0.958666
+Epoch: 7/10 - Train loss 0.058967 - Train Accuracy 0.976360 - Valid Loss 0.116052 - Valid Accuracy 0.960106
+Epoch: 8/10 - Train loss 0.044184 - Train Accuracy 0.984018 - Valid Loss 0.139043 - Valid Accuracy 0.951130
+Epoch: 9/10 - Train loss 0.035406 - Train Accuracy 0.985873 - Valid Loss 0.109648 - Valid Accuracy 0.963320
+Epoch: 10/10 - Train loss 0.037835 - Train Accuracy 0.986064 - Valid Loss 0.154180 - Valid Accuracy 0.948027
+Accuracy: 0.9480000138282776

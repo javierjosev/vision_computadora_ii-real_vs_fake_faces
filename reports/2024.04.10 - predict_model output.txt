@@ -1,0 +1,82 @@
+2024-04-10 19:59:39,957 - __main__ - INFO - Generating trained models predictions plots...
+2024-04-10 19:59:39,957 - __main__ - INFO - Generating predictions for faces_simple_cnn_data_model...
+Accuracy: 0.8339999914169312
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.81      0.87      0.84      1500
+           1       0.86      0.80      0.83      1500
+
+    accuracy                           0.83      3000
+   macro avg       0.84      0.83      0.83      3000
+weighted avg       0.84      0.83      0.83      3000
+
+
+2024-04-10 20:00:04,709 - __main__ - INFO - Generating predictions for faces_simple_cnn_data_aug_model...
+Accuracy: 0.8133333325386047
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.88      0.73      0.80      1500
+           1       0.77      0.90      0.83      1500
+
+    accuracy                           0.81      3000
+   macro avg       0.82      0.81      0.81      3000
+weighted avg       0.82      0.81      0.81      3000
+
+
+2024-04-10 20:00:22,891 - __main__ - INFO - Generating predictions for faces_simple_cnn_data_aug_reduced_model...
+Accuracy: 0.8426666855812073
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.84      0.85      0.84      1500
+           1       0.85      0.83      0.84      1500
+
+    accuracy                           0.84      3000
+   macro avg       0.84      0.84      0.84      3000
+weighted avg       0.84      0.84      0.84      3000
+
+
+2024-04-10 20:00:52,083 - __main__ - INFO - Generating predictions for faces_improved_cnn_data_aug_reduced_model...
+Accuracy: 0.8226666450500488
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.78      0.90      0.84      1500
+           1       0.88      0.74      0.81      1500
+
+    accuracy                           0.82      3000
+   macro avg       0.83      0.82      0.82      3000
+weighted avg       0.83      0.82      0.82      3000
+
+
+2024-04-10 20:01:07,192 - __main__ - INFO - Generating predictions for final_faces_cnn_data_aug_reduced_model...
+Accuracy: 0.8896666765213013
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.92      0.85      0.89      1500
+           1       0.86      0.93      0.89      1500
+
+    accuracy                           0.89      3000
+   macro avg       0.89      0.89      0.89      3000
+weighted avg       0.89      0.89      0.89      3000
+
+
+2024-04-10 20:01:29,570 - __main__ - INFO - Generating predictions for resnet18_binary_data_aug_reduced_model...
+Accuracy: 0.9480000138282776
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.99      0.91      0.95      1500
+           1       0.91      0.99      0.95      1500
+
+    accuracy                           0.95      3000
+   macro avg       0.95      0.95      0.95      3000
+weighted avg       0.95      0.95      0.95      3000
+
+
+
+Process finished with exit code 0
+

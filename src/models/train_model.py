@@ -52,6 +52,16 @@ def main(processed_path, model_path, model_to_train):
             train_faces_simple_cnn('faces_simple_cnn_data_aug_reduced', model_path,
                                    processed_train_dataloader_aug_reduced,
                                    processed_valid_dataloader_aug_reduced, epochs=35, logger=logger, show_plots=True)
+        case "faces_improved_cnn-data_aug_reduced":
+            logger.info('ONLY faces_improved_cnn model with data_aug_reduced SELECTED')
+            train_faces_improved_cnn('faces_improved_cnn_data_aug_reduced', model_path,
+                                     processed_train_dataloader_aug_reduced,
+                                     processed_valid_dataloader_aug_reduced, epochs=35, logger=logger, show_plots=True)
+        case "final_faces_cnn-data_aug_reduced":
+            logger.info('ONLY final_faces_cnn model with data_aug_reduced SELECTED')
+            train_final_faces_cnn('final_faces_cnn_data_aug_reduced', model_path,
+                                  processed_train_dataloader_aug_reduced,
+                                  processed_valid_dataloader_aug_reduced, epochs=35, logger=logger, show_plots=True)
         case "resnet18_binary-data_aug_reduced":
             logger.info('ONLY resnet18_binary model with data_aug_reduced SELECTED')
             train_resnet18_binary('resnet18_binary_data_aug_reduced"', model_path,
@@ -66,7 +76,13 @@ def main(processed_path, model_path, model_to_train):
             train_faces_simple_cnn('faces_simple_cnn_data_aug_reduced', model_path,
                                    processed_train_dataloader_aug_reduced,
                                    processed_valid_dataloader_aug_reduced, epochs=35, logger=logger, show_plots=False)
-            train_resnet18_binary('resnet18_binary_data_aug_reduced"', model_path,
+            train_faces_improved_cnn('faces_improved_cnn_data_aug_reduced', model_path,
+                                     processed_train_dataloader_aug_reduced,
+                                     processed_valid_dataloader_aug_reduced, epochs=35, logger=logger, show_plots=False)
+            train_final_faces_cnn('final_faces_cnn_data_aug_reduced', model_path,
+                                  processed_train_dataloader_aug_reduced,
+                                  processed_valid_dataloader_aug_reduced, epochs=35, logger=logger, show_plots=False)
+            train_resnet18_binary('resnet18_binary_data_aug_reduced', model_path,
                                   processed_train_dataloader_aug_reduced,
                                   processed_valid_dataloader_aug_reduced, epochs=10, logger=logger, show_plots=False)
         case _:
@@ -90,6 +106,42 @@ def train_faces_simple_cnn(model_name, model_path, processed_train_dataloader, p
         plots.evaluate_model(simple_model, processed_valid_dataloader, metric)
 
     persistence.save_model(simple_model, model_path, model_name)
+
+
+def train_faces_improved_cnn(model_name, model_path, processed_train_dataloader, processed_valid_dataloader, epochs,
+                             logger, show_plots=False):
+    # # Simple model, simple data
+    logger.info('Training FacesImprovedCNN model with dataset')
+    improved_model = models.FacesImprovedCNN()
+    optimizer = torch.optim.Adam(improved_model.parameters(), lr=0.0001)
+    loss = torch.nn.BCELoss()
+    metric = torchmetrics.classification.BinaryAccuracy()
+    data = {"train": processed_train_dataloader, "valid": processed_valid_dataloader}
+    history = models.train(improved_model, optimizer, loss, metric, data, epochs)
+
+    if show_plots:
+        plots.plot_history(history)
+        plots.evaluate_model(improved_model, processed_valid_dataloader, metric)
+
+    persistence.save_model(improved_model, model_path, model_name)
+
+
+def train_final_faces_cnn(model_name, model_path, processed_train_dataloader, processed_valid_dataloader, epochs,
+                          logger, show_plots=False):
+    # # Simple model, simple data
+    logger.info('Training FinalFacesCNN model with dataset')
+    final_model = models.FinalFacesCNN()
+    optimizer = torch.optim.Adam(final_model.parameters(), lr=0.0001)
+    loss = torch.nn.BCELoss()
+    metric = torchmetrics.classification.BinaryAccuracy()
+    data = {"train": processed_train_dataloader, "valid": processed_valid_dataloader}
+    history = models.train(final_model, optimizer, loss, metric, data, epochs)
+
+    if show_plots:
+        plots.plot_history(history)
+        plots.evaluate_model(final_model, processed_valid_dataloader, metric)
+
+    persistence.save_model(final_model, model_path, model_name)
 
 
 def train_resnet18_binary(model_name, model_path, processed_train_dataloader, processed_valid_dataloader, epochs,

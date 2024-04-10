@@ -4,7 +4,7 @@ import torch
 from torch.nn import Module
 from torch.utils.data import Dataset, DataLoader
 
-from src.common.models import FacesSimpleCNN, ResNet18Binary
+from src.common.models import FacesSimpleCNN, FacesImprovedCNN, FinalFacesCNN, ResNet18Binary
 
 
 def save_dataset(dataloader: Dataset, path, file_name):
@@ -34,6 +34,20 @@ def load_dataloader(path, file_name) -> DataLoader:
 
 def load_faces_simple_cnn_model(path, file_name) -> Module:
     model = FacesSimpleCNN()
+    file_path = os.path.join(path, file_name + '.pth')
+    model.load_state_dict(torch.load(file_path))
+    return model
+
+
+def load_faces_improved_cnn_model(path, file_name) -> Module:
+    model = FacesImprovedCNN()
+    file_path = os.path.join(path, file_name + '.pth')
+    model.load_state_dict(torch.load(file_path))
+    return model
+
+
+def load_final_faces_cnn_model(path, file_name) -> Module:
+    model = FinalFacesCNN()
     file_path = os.path.join(path, file_name + '.pth')
     model.load_state_dict(torch.load(file_path))
     return model

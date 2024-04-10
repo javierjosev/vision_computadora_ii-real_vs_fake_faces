@@ -33,15 +33,33 @@ def main(processed_path, model_path):
     faces_simple_cnn_data_aug_model = persistence.load_faces_simple_cnn_model(model_path, 'faces_simple_cnn_data_aug')
     faces_simple_cnn_data_aug_reduced_model = \
         persistence.load_faces_simple_cnn_model(model_path, 'faces_simple_cnn_data_aug_reduced')
+    faces_improved_cnn_data_aug_reduced_model = \
+        persistence.load_faces_improved_cnn_model(model_path, 'faces_improved_cnn_data_aug_reduced')
+    final_faces_cnn_data_aug_reduced_model = \
+        persistence.load_final_faces_cnn_model(model_path, 'final_faces_cnn_data_aug_reduced')
     resnet18_binary_data_aug_reduced_model = \
         persistence.load_resnet18_binary_model(model_path, 'resnet18_binary_data_aug_reduced')
 
     metric = torchmetrics.classification.BinaryAccuracy()
 
     logger.info('Generating trained models predictions plots...')
+
+    logger.info('Generating predictions for faces_simple_cnn_data_model...')
     model_predictions(faces_simple_cnn_data_model, processed_valid_dataloader, metric)
+
+    logger.info('Generating predictions for faces_simple_cnn_data_aug_model...')
     model_predictions(faces_simple_cnn_data_aug_model, processed_valid_dataloader_aug, metric)
+
+    logger.info('Generating predictions for faces_simple_cnn_data_aug_reduced_model...')
     model_predictions(faces_simple_cnn_data_aug_reduced_model, processed_valid_dataloader_aug_reduced, metric)
+
+    logger.info('Generating predictions for faces_improved_cnn_data_aug_reduced_model...')
+    model_predictions(faces_improved_cnn_data_aug_reduced_model, processed_valid_dataloader_aug_reduced, metric)
+
+    logger.info('Generating predictions for final_faces_cnn_data_aug_reduced_model...')
+    model_predictions(final_faces_cnn_data_aug_reduced_model, processed_valid_dataloader_aug_reduced, metric)
+
+    logger.info('Generating predictions for resnet18_binary_data_aug_reduced_model...')
     model_predictions(resnet18_binary_data_aug_reduced_model, processed_valid_dataloader_aug_reduced, metric)
 
 

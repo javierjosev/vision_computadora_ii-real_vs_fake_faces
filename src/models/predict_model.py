@@ -62,6 +62,13 @@ def main(processed_path, model_path):
     logger.info('Generating predictions for resnet18_binary_data_aug_reduced_model...')
     model_predictions(resnet18_binary_data_aug_reduced_model, processed_valid_dataloader_aug_reduced, metric)
 
+    logger.info('Generating ROC curve for the models...')
+    model_array = [(faces_simple_cnn_data_aug_reduced_model, "FacesSimpleCNN"),
+                   (faces_improved_cnn_data_aug_reduced_model, "FacesImprovedCNN"),
+                   (final_faces_cnn_data_aug_reduced_model, "FinalFacesCNN"),
+                   (resnet18_binary_data_aug_reduced_model, "ResNet18Binary")]
+    plots.roc_plot_comparison(model_array, processed_valid_dataloader)
+
 
 def model_predictions(model, valid_dataloader, metric):
     if torch.cuda.is_available():

@@ -3,7 +3,7 @@ import random
 import numpy as np
 import torch
 from matplotlib import pyplot as plt
-from sklearn.metrics import classification_report, confusion_matrix
+from sklearn.metrics import classification_report, confusion_matrix, roc_curve
 import seaborn as sns
 
 
@@ -102,4 +102,39 @@ def evaluate_model(model, valid_loader, metric):
     sns.heatmap(cm, annot=True, fmt='g')
     plt.xlabel('Predicted labels')
     plt.ylabel('True labels')
+    plt.show()
+
+
+def roc_plot_comparison(model_array, valid_loader):
+    plt.figure(figsize=(8, 8))
+
+    # device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    device = "cpu"
+
+    seed = 42
+    torch.manual_seed(seed)
+    np.random.seed(seed)
+    random.seed(seed)
+
+    all_preds = []
+    all_labels = []
+
+    for model, label in model_array:
+        model.eval()
+        with torch.no_grad():
+            for images, labels in valid_loader:
+                images = images.to(device)
+                labels = labels.to(device)
+                outputs = model(images)
+                # _, predicted = torch.max(outputs, 1)
+                predicted = outputs
+                all_preds.extend(predicted.cpu().numpy())
+                all_labels.extend(labels.cpu().numpy())
+        fpr, tpr, _ = roc_curve(torch.tensor(all_labels), torch.tensor(all_preds))
+        plt.plot(fpr, tpr, label=label)
+
+    plt.xlabel("False positives ratio")
+    plt.ylabel("True positives ratio")
+    plt.legend()
+    plt.tight_layout()
     plt.show()

@@ -1,0 +1,12 @@
+2024-04-14 12:27:35,150 - __main__ - INFO - Training FacesSimpleCNN model with dataset
+Epoch: 1/10 - Train loss 0.617712 - Train Accuracy 0.659342 - Valid Loss 0.596150 - Valid Accuracy 0.674867
+Epoch: 2/10 - Train loss 0.523640 - Train Accuracy 0.744340 - Valid Loss 0.497505 - Valid Accuracy 0.761857
+Epoch: 3/10 - Train loss 0.440793 - Train Accuracy 0.798896 - Valid Loss 0.457013 - Valid Accuracy 0.786791
+Epoch: 4/10 - Train loss 0.357212 - Train Accuracy 0.846699 - Valid Loss 0.448678 - Valid Accuracy 0.784242
+Epoch: 5/10 - Train loss 0.270914 - Train Accuracy 0.891220 - Valid Loss 0.426260 - Valid Accuracy 0.813608
+Epoch: 6/10 - Train loss 0.210630 - Train Accuracy 0.918950 - Valid Loss 0.416489 - Valid Accuracy 0.822473
+Epoch: 7/10 - Train loss 0.153358 - Train Accuracy 0.944873 - Valid Loss 0.413904 - Valid Accuracy 0.832558
+Epoch: 8/10 - Train loss 0.109751 - Train Accuracy 0.962567 - Valid Loss 0.438342 - Valid Accuracy 0.833777
+Epoch: 9/10 - Train loss 0.071146 - Train Accuracy 0.979547 - Valid Loss 0.508142 - Valid Accuracy 0.829233
+Epoch: 10/10 - Train loss 0.054216 - Train Accuracy 0.984113 - Valid Loss 0.506578 - Valid Accuracy 0.830895
+Accuracy: 0.8306666612625122
